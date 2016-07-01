@@ -1,0 +1,22 @@
+{
+  "sqlcl" : "sqlcl",
+  "defaults" : {
+    "author" : "OOS TAPI",
+    "templates" : [
+      {
+        "path" : "./templates/package.pks",
+        "outFileName" : "TABLE_NAME.pks"
+      },
+      {
+        "path" : "./templates/package.pkb",
+        "outFileName" : "TABLE_NAME.pkb"
+      }
+    ]
+  },
+  "projects" : {
+    "giffy" : {
+      "connectionDetails" : "giffy/giffy@localhost:11521/xe",
+      "outputPath" : "./output"
+    }
+  }
+}

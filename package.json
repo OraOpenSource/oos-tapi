@@ -1,0 +1,23 @@
+{
+  "name": "oos-tapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/OraOpenSource/oos-tapi.git"
+  },
+  "author": "OraOpenSource",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/OraOpenSource/oos-tapi/issues"
+  },
+  "homepage": "https://github.com/OraOpenSource/oos-tapi#readme",
+  "dependencies": {
+    "handlebars": "^4.0.5",
+    "node.extend": "^1.1.5"
+  }
+}
