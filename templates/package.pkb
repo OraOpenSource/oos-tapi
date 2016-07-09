@@ -7,27 +7,29 @@ create or replace package body {{toLowerCase table_name}} as
    *
    *
    * @example
-
+   *
    * @issue
    *
    * @author {{author}}
    * @created {{date}}
    {{#each columns}}
    * @param p_{{toLowerCase column_name}}:
-{{/each}} {{! columns }}
+{{~#unless @last}}{{lineBreak}}{{/unless}}
+{{~/each}} {{! columns }}
    */
   procedure ins_rec(
     {{#each columns}}
-    -- TODO mdsouza: Need to figure out how to only include commas on non-last column
-    p_{{toLowerCase column_name}} in {{toLowerCase data_type}},
-    {{/each}} {{! columns }}
+    p_{{toLowerCase column_name}} in {{toLowerCase data_type}}{{#unless @last}},{{lineBreak}}{{/unless}}
+    {{~/each}} {{! columns }}
   )
   as
     l_scope logger_logs.scope%type := gc_scope_prefix || 'ins_rec';
     l_params logger.tab_param;
 
   begin
-    logger.append_param(l_params, 'p_param1_todo', p_param1_todo);
+    {{#each columns}}
+    logger.append_param(l_params, 'p_{{toLowerCase column_name}}', p_{{toLowerCase column_name}});
+    {{/each}}
     logger.log('START', l_scope, null, l_params);
 
 
