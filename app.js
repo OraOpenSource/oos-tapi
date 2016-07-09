@@ -17,6 +17,7 @@ project = extend(true, {}, config.defaults, project);
 
 project.templateContent = {};
 
+
 // TODO mdsouza: allow for a custom SQL file to generate the SQL as MTAG has specific needs
 
 // TODO eventually we can get this data from SQLcl
@@ -28,13 +29,26 @@ project.templateContent = {};
 // {"column_name":"ORDER_ITEM_ID","data_type":"NUMBER","nullable":"N"},{"column_name":"ORDER_ID","data_type":"NUMBER","nullable":"N"},{"column_name":"PRODUCT_ID","data_type":"NUMBER","nullable":"N"},{"column_name":"UNIT_PRICE","data_type":"NUMBER","nullable":"N"},{"column_name":"QUANTITY","data_type":"NUMBER","nullable":"N"}]}]}]}
 // ;
 
+// Generate SQL friendly list of Table Names
+var tablesSql = project.tables.split(',');
+tablesSql.forEach(function(curVal, index){
+  this[index] = `'${curVal.toUpperCase().trim()}'`
+}, tablesSql);
+
+// Need to wrap the table names around some special characters to procduce 'table1','table2', etc
+// See http://stackoverflow.com/questions/30489214/double-quote-as-parameter-in-sqlplus
+var cmd = `${config.sqlcl} ${project.connectionDetails} @${project.sqlFile} "'${tablesSql.join(',')}'"`;
+
+
+console.log(cmd);
 
 var stdout = execSync(
-  config.sqlcl + ' ' + project.connectionDetails + ' @' + project.sqlFile,
+  cmd ,
   {
     "pwd": path.resolve(__dirname),
     "encoding": 'utf8'
   });
+
 
 // This will be the string between START and END
 try{
@@ -55,15 +69,16 @@ try{
 catch(e){
   console.log(`${consoleRed} *** Error converting SQL output to JSON ***\n`);
   console.log('Ensure that "set sqlformat json" is set in your SQL file');
+  console.log('Ensure that "set verify off" is set in your SQL file');
   console.log(`\n\n Output: \n\n ${tableInfo}`);
   process.exit(1);
 }
+
 
 // Filter to items level
 // This will return an array of data
 // Each array entry will represent a table.
 tableInfo = tableInfo.results[0].items;
-
 
 
 // Parse templates and load their content
