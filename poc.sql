@@ -1,6 +1,7 @@
 set sqlformat json
 set feedback off
 set serveroutput on
+set verify off
 
 exec dbms_output.put_line('%%%START%%%');
 
@@ -37,7 +38,7 @@ select
 from
   user_tables ut
 where 1=1
-  and ut.table_name in ('DEMO_ORDER_ITEMS', 'EMP')
+  and ut.table_name in (&1)
 ;
 
 exec dbms_output.put_line('%%%END%%%');

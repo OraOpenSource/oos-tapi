@@ -17,7 +17,8 @@
   "projects" : {
     "giffy" : {
       "connectionDetails" : "giffy/giffy@localhost:11521/xe",
-      "outputPath" : "./output"
+      "outputPath" : "./output",
+      "tables" : "emp,dept,  demo_orders"
     }
   }
 }
