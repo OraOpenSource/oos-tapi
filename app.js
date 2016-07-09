@@ -3,6 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const extend = require('node.extend');
 const {execSync} = require('child_process');
+const dateFormat = require('dateformat');
 
 // For error messages
 const consoleRed = '\033[31m';
@@ -98,7 +99,7 @@ if (/^\.\//.test(project.outputPath)) {
 // Loop over each table and then merge with handlebars
 tableInfo.forEach(function(myTable){
   myTable.author = project.author;
-  myTable.date = 'TODO DD-MON-YYYY';
+  myTable.date = dateFormat(new Date(), "dd-mmm-yyyy").toUpperCase();
   myTable.files = []
   // Merge table information with templates
   project.templates.forEach(function(template){

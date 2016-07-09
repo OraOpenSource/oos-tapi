@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/OraOpenSource/oos-tapi#readme",
   "dependencies": {
+    "dateformat": "^1.0.12",
     "handlebars": "^4.0.5",
     "node.extend": "^1.1.5"
   }
