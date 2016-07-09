@@ -4,30 +4,28 @@ const fs = require('fs');
 const extend = require('node.extend');
 const {execSync} = require('child_process');
 
-
+// For error messages
 const consoleRed = '\033[31m';
 
 
+// Parameters passed in
+const args = process.argv.slice(2);
+// args[0] is config option to use
+
+if (args.length !== 1){
+  console.log(`${consoleRed} *** Error: Must pass in project to use as first parameter`);
+  process.exit(1);
+}
+
 var config = JSON.parse(fs.readFileSync(path.resolve(__dirname + '/config.json'),'utf8'));
 
-// TODO mdsouza: need to use args but for now testing
 // TODO mdsouza: Create a sample_config.json
-var project = config.projects.giffy;
+var project = config.projects[args[0]];
 project = extend(true, {}, config.defaults, project);
 
 project.templateContent = {};
 
 
-// TODO mdsouza: allow for a custom SQL file to generate the SQL as MTAG has specific needs
-
-// TODO eventually we can get this data from SQLcl
-// See poc.sql for query to use
-// var tableInfo = {"results":[{"columns":[{"name":"TABLE_NAME","type":"NUMBER"},{"name":"COLUMNS","type":"NUMBER"}],"items":
-// [
-// {"table_name":"DEMO_ORDERS","columns":[
-// {"column_name":"ORDER_ID","data_type":"NUMBER","nullable":"N"},{"column_name":"CUSTOMER_ID","data_type":"NUMBER","nullable":"N"},{"column_name":"ORDER_TOTAL","data_type":"NUMBER","nullable":"Y"},{"column_name":"ORDER_TIMESTAMP","data_type":"TIMESTAMP(6) WITH LOCAL TIME ZONE","nullable":"Y"},{"column_name":"USER_NAME","data_type":"VARCHAR2","nullable":"Y"},{"column_name":"TAGS","data_type":"VARCHAR2","nullable":"Y"}]},{"table_name":"DEMO_ORDER_ITEMS","columns":[
-// {"column_name":"ORDER_ITEM_ID","data_type":"NUMBER","nullable":"N"},{"column_name":"ORDER_ID","data_type":"NUMBER","nullable":"N"},{"column_name":"PRODUCT_ID","data_type":"NUMBER","nullable":"N"},{"column_name":"UNIT_PRICE","data_type":"NUMBER","nullable":"N"},{"column_name":"QUANTITY","data_type":"NUMBER","nullable":"N"}]}]}]}
-// ;
 
 // Generate SQL friendly list of Table Names
 var tablesSql = project.tables.split(',');
@@ -39,8 +37,6 @@ tablesSql.forEach(function(curVal, index){
 // See http://stackoverflow.com/questions/30489214/double-quote-as-parameter-in-sqlplus
 var cmd = `${config.sqlcl} ${project.connectionDetails} @${project.sqlFile} "'${tablesSql.join(',')}'"`;
 
-
-console.log(cmd);
 
 var stdout = execSync(
   cmd ,
@@ -122,5 +118,6 @@ for (var key in tableInfo){
     // Store the merged files on file system
     fs.writeFileSync(path.resolve(project.outputPath, fileName), myTable.files[fileName]);
   }
-
 }
+
+console.log(`Succesful. Look in ${project.outputPath} for files`);
