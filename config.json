@@ -1,6 +1,7 @@
 {
   "sqlcl" : "sqlcl",
   "defaults" : {
+    "sqlFile" : "poc.sql",
     "author" : "OOS TAPI",
     "templates" : [
       {
