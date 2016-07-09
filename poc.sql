@@ -1,16 +1,22 @@
+set sqlformat json
+set feedback off
+set serveroutput on
+
+exec dbms_output.put_line('%%%START%%%');
+
 select
   ut.table_name,
   cursor(
-    select 
+    select
       utc.column_name,
       utc.data_type,
       utc.nullable
       -- TODO mdsouza: utc.hidden_column and utc.virtual_column
     --  ,utc.*
-    from 
+    from
       user_tab_cols utc,
       (
-        select 
+        select
           uc.table_name,
           ucc.column_name,
           ucc.position
@@ -23,21 +29,15 @@ select
       ) uc
     where 1=1
       and utc.table_name = ut.table_name
-      -- 
+      --
       and utc.table_name = uc.table_name(+)
       and utc.column_name = uc.column_name(+)
     order by uc.position nulls last, utc.column_id
   ) columns
-from 
+from
   user_tables ut
 where 1=1
-  and ut.table_name = 'DEMO_ORDER_ITEMS'
+  and ut.table_name in ('DEMO_ORDER_ITEMS', 'EMP')
 ;
 
-;
-
-select *
-from user_constraints
-where 1=1
-  and table_name = 'DEMO_ORDER_ITEMS'
-  and constraint_type = 'P'
+exec dbms_output.put_line('%%%END%%%');
