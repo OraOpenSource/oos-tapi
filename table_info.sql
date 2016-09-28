@@ -11,7 +11,8 @@ select
     select
       utc.column_name,
       utc.data_type,
-      utc.nullable
+      utc.nullable,
+      uc.constraint_type
       -- TODO mdsouza: utc.hidden_column and utc.virtual_column
     --  ,utc.*
     from
@@ -20,7 +21,8 @@ select
         select
           uc.table_name,
           ucc.column_name,
-          ucc.position
+          ucc.position,
+          uc.constraint_type
         from
           user_constraints uc,
           user_cons_columns ucc
