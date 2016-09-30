@@ -1,4 +1,4 @@
-create or replace package body {{toLowerCase table_name}} as
+create or replace package body pkg_{{toLowerCase table_name}} as
 
   gc_scope_prefix constant varchar2(31) := lower($$plsql_unit) || '.';
 
@@ -103,5 +103,5 @@ create or replace package body {{toLowerCase table_name}} as
       logger.log_error('Unhandled Exception', l_scope, null, l_params);
       raise;
   end delte_record;
-end {{toLowerCase table_name}};
+end pkg_{{toLowerCase table_name}};
 /

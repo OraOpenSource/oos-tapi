@@ -1,4 +1,4 @@
-create or replace package body {{toLowerCase table_name}} as
+create or replace package pkg_{{toLowerCase table_name}} as
 
   gc_scope_prefix constant varchar2(31) := lower($$plsql_unit) || '.';
 
@@ -18,5 +18,5 @@ create or replace package body {{toLowerCase table_name}} as
      {{#each columns}}{{#ifCond constraint_type '==' 'P'}} pi_{{toLowerCase column_name}} in {{toLowerCase data_type}}{{~/ifCond}} {{~/each}} {{! columns }}
   );
 
-end {{toLowerCase table_name}};
+end pkg_{{toLowerCase table_name}};
 /
