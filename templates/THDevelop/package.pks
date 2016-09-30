@@ -4,13 +4,13 @@ create or replace package pkg_{{toLowerCase table_name}} as
 
   procedure save_record(
     {{#each columns}}
-    pi_{{toLowerCase column_name}} in {{toLowerCase data_type}}{{#unless @last}},{{lineBreak}}{{/unless}}
+    pi_{{toLowerCase column_name}} in {{toLowerCase data_type}}{{#ifCond nullable '==' 'Y'}} default null {{~/ifCond}}{{#unless @last}},{{lineBreak}}{{/unless}}
     {{~/each}} {{! columns }}
   );
 
   procedure update_record(
     {{#each columns}}
-    pi_{{toLowerCase column_name}} in {{toLowerCase data_type}}{{#unless @last}},{{lineBreak}}{{/unless}}
+    pi_{{toLowerCase column_name}} in {{toLowerCase data_type}}{{#ifCond nullable '==' 'Y'}} default null {{~/ifCond}}{{#unless @last}},{{lineBreak}}{{/unless}}
     {{~/each}} {{! columns }}
   );
 
