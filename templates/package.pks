@@ -1,4 +1,4 @@
-create or replace package body {{toLowerCase table_name}} as
+create or replace package {{toLowerCase table_name}} as
 
   gc_scope_prefix constant varchar2(31) := lower($$plsql_unit) || '.';
 

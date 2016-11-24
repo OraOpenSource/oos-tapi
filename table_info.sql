@@ -12,7 +12,12 @@ select
       utc.column_name,
       utc.data_type,
       utc.nullable,
-      uc.constraint_type
+      uc.constraint_type,
+      case when utc.data_type = 'VARCHAR2' then to_char(utc.char_length )
+           when utc.data_type = 'NUMBER' and (utc.data_precision is not null or utc.data_scale is not null)
+              then to_char(case when utc.data_precision is null then 0 else utc.data_precision end) || ',' || to_char(case when utc.data_scale is null then 0 else utc.data_scale end)
+           when utc.data_type like 'TIMESTAMP%' then null
+           else '0' end  as data_length
       -- TODO mdsouza: utc.hidden_column and utc.virtual_column
     --  ,utc.*
     from

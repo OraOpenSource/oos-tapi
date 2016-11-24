@@ -5,20 +5,24 @@
     "author" : "OOS TAPI",
     "templates" : [
       {
-        "path" : "./templates/package.pks",
+        "path" : "./templates/THDevelop/package.pks",
         "outFileName" : "TABLE_NAME.pks"
       },
       {
-        "path" : "./templates/package.pkb",
+        "path" : "./templates/THDevelop/package.pkb",
         "outFileName" : "TABLE_NAME.pkb"
+      },
+      {
+        "path" : "./templates/THDevelop/types.pks",
+        "outFileName" : "T_TABLE_NAME.sql"
       }
     ]
   },
   "projects" : {
-    "giffy" : {
-      "connectionDetails" : "giffy/giffy@localhost:11521/xe",
+    "THDevelop" : {
+      "connectionDetails" : "doagadm/doagadm@pdbdoag_cdb12c_VM",
       "outputPath" : "./output",
-      "tables" : "emp,dept,  demo_orders"
+      "tables" : "T01_COUNTRIES,  doagadm"
     }
   }
 }
