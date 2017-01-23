@@ -101,11 +101,12 @@ tableInfo.forEach(function(myTable){
   myTable.author = project.author;
   myTable.date = dateFormat(new Date(), "dd-mmm-yyyy").toUpperCase();
   myTable.files = []
+
   // Merge table information with templates
   project.templates.forEach(function(template){
     let fileName = template.outFileName.replace('TABLE_NAME', myTable.table_name.toLowerCase());
 
-    myTable.files[fileName] = template.handlerbarsObj(myTable);;
+    myTable.files[fileName] = template.handlerbarsObj(myTable);
   }); //project.templates
 });
 
