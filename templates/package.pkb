@@ -12,10 +12,8 @@ create or replace package body {{toLowerCase table_name}} as
    *
    * @author {{author}}
    * @created {{date}}
-   {{#each columns}}
-   * @param p_{{toLowerCase column_name}}:
-{{~#unless @last}}{{lineBreak}}{{/unless}}
-{{~/each}} {{! columns }}
+   *
+{{javaDocParams columns 3}}
    */
   procedure ins_rec(
     {{#each columns}}
@@ -32,6 +30,7 @@ create or replace package body {{toLowerCase table_name}} as
     {{/each}}
     logger.log('START', l_scope, null, l_params);
 
+    insert into {{table_name}} ...
 
     logger.log('END', l_scope);
   exception
