@@ -30,7 +30,13 @@ create or replace package body {{toLowerCase table_name}} as
     {{/each}}
     logger.log('START', l_scope, null, l_params);
 
-    insert into {{table_name}} ...
+    insert into {{toLowerCase table_name}}(
+      {{#each columns}}
+      {{toLowerCase column_name}}{{#unless @last}},{{lineBreak}}{{/unless}}{{~/each}} {{! columns }})
+    values(
+      {{#each columns}}
+      p_{{toLowerCase column_name}}{{#unless @last}},{{lineBreak}}{{/unless}}{{~/each}} {{! columns }}
+    );
 
     logger.log('END', l_scope);
   exception
